@@ -1,0 +1,1 @@
+{"version":3,"file":"neighbor.js","sourceRoot":"","sources":["../../src/entities/neighbor.ts"],"names":[],"mappings":";;;AAGA,MAAa,QAAQ;IAIjB,YAAY,KAAa,EAAE,QAAmB;QAC1C,IAAG,KAAK,EAAC;YACL,IAAI,CAAC,KAAK,GAAG,KAAK,CAAA;SACrB;QACD,IAAG,QAAQ;YACP,IAAI,CAAC,QAAQ,GAAG,QAAQ,CAAA;IAChC,CAAC;CACJ;AAXD,4BAWC"}

@@ -1,0 +1,21 @@
+
+    // createTarget(): void{
+    //     const node = this.nodexs[Math.floor(Math.random() * 4)];
+    //     if(!node.isInitial){
+    //         node.isTarget = true
+    //     } else {
+    //         this.createTarget()
+    //     }
+    // }
+
+    // createInitial(): void{
+    //     const node = this.nodexs[Math.floor(Math.random() * 4)];
+    //     if(!node.isTarget){
+    //         node.isInitial = true
+    //     } else {
+    //         this.createInitial()
+    //     }
+    // }
+
+    
+
