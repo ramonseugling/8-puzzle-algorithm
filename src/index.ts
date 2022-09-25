@@ -8,8 +8,6 @@ function main() {
     const board = new Board(matrix)
     const initialCoordinate = new Coordinate(1,2)
     const targetCoordinate = new Coordinate(4,4)
-    const listaFechada: Nodex[]
-    const listaAberta: Nodex[]
 
     board.setInitial(initialCoordinate)
     board.setTarget(targetCoordinate)
