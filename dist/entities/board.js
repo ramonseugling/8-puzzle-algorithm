@@ -4,16 +4,20 @@ exports.Board = void 0;
 const coordinate_1 = require("./coordinate");
 const nodex_1 = require("./nodex");
 class Board {
-    constructor(matrix) {
+    constructor(width, heigh, initial, target) {
         this.nodexs = [];
-        for (let xAxis = 0; xAxis < matrix.width; xAxis++) {
+        for (let xAxis = 0; xAxis < width; xAxis++) {
             this.nodexs[xAxis] = [];
-            for (let yAxis = 0; yAxis < matrix.heigh; yAxis++) {
+            for (let yAxis = 0; yAxis < heigh; yAxis++) {
                 let nodex = new nodex_1.Nodex(new coordinate_1.Coordinate(xAxis, yAxis));
                 this.nodexs[xAxis][yAxis] = nodex;
             }
         }
+        this.setInitial(initial);
+        this.setTarget(target);
     }
+    getInitial() { return this.initial; }
+    getTarget() { return this.target; }
     setInitial(coordinate) {
         this.initial = coordinate;
     }

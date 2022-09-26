@@ -7,16 +7,22 @@ export class Board{
     initial!: Coordinate
     target!: Coordinate
  
-    constructor(matrix: Matrix) {
+    constructor(width: number, heigh: number, initial: Coordinate, target: Coordinate) {
         this.nodexs = []
-        for (let xAxis = 0; xAxis < matrix.width; xAxis++) { 
+        for (let xAxis = 0; xAxis < width; xAxis++) { 
             this.nodexs[xAxis] = []
-            for (let yAxis = 0; yAxis < matrix.heigh; yAxis++) {
+            for (let yAxis = 0; yAxis < heigh; yAxis++) {
                 let nodex = new Nodex(new Coordinate(xAxis,yAxis))
                 this.nodexs[xAxis][yAxis] = nodex
             }          
         }
+
+        this.setInitial(initial)
+        this.setTarget(target)
     }
+    
+    getInitial(): Coordinate{ return this.initial }
+    getTarget(): Coordinate{ return this.target }
 
     setInitial(coordinate: Coordinate){
         this.initial = coordinate
@@ -25,26 +31,6 @@ export class Board{
     setTarget(coordinate: Coordinate){
         this.target = coordinate
     }
-
-    // getTarget(): Nodex {
-    //     for (let xAxis = 1; xAxis <= this.nodexs; xAxis++) { 
-    //         for (let yAxis = 1; yAxis <= matrix.heigh; yAxis++) {
-    //             if (this.nodexs[index].getCoordinate().x === this.target.x && this.nodexs[index].getCoordinate().y === this.target.y){
-    //                 return this.nodexs[][index]
-    //             }
-    //         }
-    //     }
-    //     return new Nodex(new Coordinate(0,0))
-    // }
-
-    // getInitial(): Nodex {
-    //     for (let index = 0; index < this.nodexs.length; index++) {
-    //         if (this.nodexs[index].getCoordinate().x === this.initial.x && this.nodexs[index].getCoordinate().y === this.initial.y){
-    //             return this.nodexs[index]
-    //         }
-    //     }
-    //     return new Nodex(new Coordinate(0,0))
-    // }
 
     getNodexByCoordinate(coordinate: Coordinate): Nodex {
         let foundNodex = new Nodex()    

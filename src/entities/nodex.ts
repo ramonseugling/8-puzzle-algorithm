@@ -52,5 +52,8 @@ export class Nodex {
     getTargetDistance() : number{ return this.targetDistance }
     getCoordinate() : Coordinate{ return this.coordinate }
 
-    setTarget(coordinate: Coordinate) : void{ this.target = coordinate }
+    setTarget(coordinate: Coordinate) : void{
+        this.target = coordinate
+        this.calculateTargetDistance()
+    }
 }
