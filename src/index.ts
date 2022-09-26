@@ -1,48 +1,45 @@
 import { Board } from "./entities/board";
+import { ClosedList } from "./entities/closed-list";
 import { Coordinate } from "./entities/coordinate";
-import { Nodex } from "./entities/nodex";
+import { Node } from "./entities/node";
+import { OpenList } from "./entities/open-list";
+import { ProgramParams } from "./entities/program-params";
+
+function getProgramParams() : ProgramParams{
+    return {
+        initialCoordinate: new Coordinate(1,2),
+        targetCoordinate: new Coordinate(4,2),
+        boardMatrix: { width: 5, heigh: 5 }
+    }
+}
 
 function main() {
-    const board = new Board(5/**Width */,5/**Heigh */, new Coordinate(2,1) /**Initial */, new Coordinate(4,4) /**Target */)
+    const {initialCoordinate, targetCoordinate, boardMatrix} = getProgramParams()
+    const board = new Board(boardMatrix)
+    const initial = board.getNodeByCoordinate(initialCoordinate)
+    initial.setTarget(targetCoordinate)
+    const target = board.getNodeByCoordinate(targetCoordinate)
+    const openList = new OpenList(initial)
+    const closedList = new ClosedList()
+    let current : Node
 
-    const initial = board.getNodexByCoordinate(board.getInitial())
-    initial.setTarget(board.getTarget())
+    do{
+        current = openList.getFirst()
+      
+        let neighbors = current.getNeighbors()
+        neighbors = neighbors.filter((item) => { return board.hasNodeByCoordinate(item.node.getCoordinate()) })
 
-    let listaAbertos = [initial] 
-    let listaFechados = []
-
-    let contador = 0
-    while(contador < 100){
-        let nodoAtual = listaAbertos[0]
-        board.initial = nodoAtual.getCoordinate()
-        board.show()
-        if(nodoAtual.getCoordinate().x === board.getTarget().x && nodoAtual.getCoordinate().y === board.getTarget().y){
-            console.log('Atingimos o objetivo')
-            console.log('Quantidade de iterações: ', contador)
-            return
+        for (let index = 0; index < neighbors.length; index++) {
+            neighbors[index].node.setTarget(target.getCoordinate())
+            openList.add(neighbors[index].node)
         }
-
-        const vizinhos = nodoAtual.getNeighbors()
-        const vizinhosValidos = vizinhos.filter((item) => { return board.exists(item.nodex.getCoordinate()) })
-
-        for (let index = 0; index < vizinhosValidos.length; index++) {
-            vizinhosValidos[index].nodex.setTarget(board.getTarget())
-            listaAbertos.push(vizinhosValidos[index].nodex)
-        }
-
-        listaFechados.push(listaAbertos.shift())
-
-        listaAbertos = listaAbertos.sort((item1 : Nodex, item2 : Nodex) => {
-            if(item1.getTargetDistance() > item2.getTargetDistance()){
-                return 1
-            }
-            if(item1.getTargetDistance() < item2.getTargetDistance()){
-                return -1
-            }
-            return 0
-        })
-        contador++
-    }
+        closedList.add(openList.exitFirst())
+        openList.sort()
+    }while(!(current.getCoordinate().getXAxis() === target.getCoordinate().getXAxis()
+        && current.getCoordinate().getYAxis() === target.getCoordinate().getYAxis()))
+    console.log
+    console.log('Atingimos o objetivo')
+    console.log('Quantidade de iterações: ', closedList.getNodes().length - 1)
 }
 
 main()

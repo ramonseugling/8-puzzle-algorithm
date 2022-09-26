@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Neighbor = void 0;
 class Neighbor {
-    constructor(nodex, position) {
-        if (nodex) {
-            this.nodex = nodex;
+    constructor(node, position) {
+        if (node) {
+            this.node = node;
         }
         if (position)
             this.position = position;

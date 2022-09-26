@@ -1,0 +1,1 @@
+{"version":3,"file":"closed-list.js","sourceRoot":"","sources":["../../src/entities/closed-list.ts"],"names":[],"mappings":";;;AAEA,MAAa,UAAU;IAEnB;QACI,IAAI,CAAC,KAAK,GAAG,EAAE,CAAA;IACnB,CAAC;IACD,QAAQ,KAAa,OAAO,IAAI,CAAC,KAAK,CAAA,CAAA,CAAC;IACvC,GAAG,CAAE,IAAsB;QACvB,IAAI,IAAI,EAAC;YACL,IAAI,CAAC,KAAK,CAAC,IAAI,CAAC,IAAI,CAAC,CAAA;SACxB;IACL,CAAC;CACJ;AAXD,gCAWC"}

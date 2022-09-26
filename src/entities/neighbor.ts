@@ -1,13 +1,13 @@
 import { Position } from "../enum/position";
-import { Nodex } from "./nodex";
+import { Node } from "./node";
 
 export class Neighbor {
-    nodex!: Nodex
+    node!: Node
     position!: Position
 
-    constructor(nodex?: Nodex, position?: Position){
-        if(nodex){
-            this.nodex = nodex
+    constructor(node?: Node, position?: Position){
+        if(node){
+            this.node = node
         }
         if(position)
             this.position = position        

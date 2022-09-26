@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Nodex = void 0;
+exports.Node = void 0;
 const position_1 = require("../enum/position");
 const coordinate_1 = require("./coordinate");
 const neighbor_1 = require("./neighbor");
-class Nodex {
+class Node {
     constructor(coordinate, target) {
         if (coordinate)
             this.coordinate = coordinate;
@@ -28,16 +28,16 @@ class Nodex {
         return [upNeighbor, rightNeighbor, bottomNeighbor, leftNeighbor];
     }
     getUpNeighborCoordinate() {
-        return new Nodex(new coordinate_1.Coordinate(this.coordinate.getXAxis(), this.coordinate.getYAxis() + 1));
+        return new Node(new coordinate_1.Coordinate(this.coordinate.getXAxis(), this.coordinate.getYAxis() + 1));
     }
     getRightNeighborCoordinate() {
-        return new Nodex(new coordinate_1.Coordinate(this.coordinate.getXAxis() + 1, this.coordinate.getYAxis()));
+        return new Node(new coordinate_1.Coordinate(this.coordinate.getXAxis() + 1, this.coordinate.getYAxis()));
     }
     getBottomNeighborCoordinate() {
-        return new Nodex(new coordinate_1.Coordinate(this.coordinate.getXAxis(), this.coordinate.getYAxis() - 1));
+        return new Node(new coordinate_1.Coordinate(this.coordinate.getXAxis(), this.coordinate.getYAxis() - 1));
     }
     getLeftNeighborCoordinate() {
-        return new Nodex(new coordinate_1.Coordinate(this.coordinate.getXAxis() - 1, this.coordinate.getYAxis()));
+        return new Node(new coordinate_1.Coordinate(this.coordinate.getXAxis() - 1, this.coordinate.getYAxis()));
     }
     calculateTargetDistance() {
         let xDifference = Math.abs(this.target.getXAxis() - this.coordinate.getXAxis());
@@ -51,5 +51,5 @@ class Nodex {
         this.calculateTargetDistance();
     }
 }
-exports.Nodex = Nodex;
-//# sourceMappingURL=nodex.js.map
+exports.Node = Node;
+//# sourceMappingURL=node.js.map
