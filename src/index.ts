@@ -3,7 +3,7 @@ import { Coordinate } from "./entities/coordinate";
 import { Nodex } from "./entities/nodex";
 
 function main() {
-    const board = new Board(5/**Width */,5/**Heigh */, new Coordinate(1,2) /**Initial */, new Coordinate(4,0) /**Target */)
+    const board = new Board(5/**Width */,5/**Heigh */, new Coordinate(2,1) /**Initial */, new Coordinate(4,4) /**Target */)
 
     const initial = board.getNodexByCoordinate(board.getInitial())
     initial.setTarget(board.getTarget())
@@ -14,7 +14,8 @@ function main() {
     let contador = 0
     while(contador < 100){
         let nodoAtual = listaAbertos[0]
-
+        board.initial = nodoAtual.getCoordinate()
+        board.show()
         if(nodoAtual.getCoordinate().x === board.getTarget().x && nodoAtual.getCoordinate().y === board.getTarget().y){
             console.log('Atingimos o objetivo')
             console.log('Quantidade de iterações: ', contador)

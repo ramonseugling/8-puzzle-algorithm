@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const board_1 = require("./entities/board");
 const coordinate_1 = require("./entities/coordinate");
 function main() {
-    const board = new board_1.Board(5, 5, new coordinate_1.Coordinate(1, 2), new coordinate_1.Coordinate(4, 0));
+    const board = new board_1.Board(5, 5, new coordinate_1.Coordinate(2, 1), new coordinate_1.Coordinate(4, 4));
     const initial = board.getNodexByCoordinate(board.getInitial());
     initial.setTarget(board.getTarget());
     let listaAbertos = [initial];
@@ -11,6 +11,8 @@ function main() {
     let contador = 0;
     while (contador < 100) {
         let nodoAtual = listaAbertos[0];
+        board.initial = nodoAtual.getCoordinate();
+        board.show();
         if (nodoAtual.getCoordinate().x === board.getTarget().x && nodoAtual.getCoordinate().y === board.getTarget().y) {
             console.log('Atingimos o objetivo');
             console.log('Quantidade de iterações: ', contador);
