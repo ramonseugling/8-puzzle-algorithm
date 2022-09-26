@@ -32,7 +32,6 @@ function main() {
         openList.sort();
     } while (!(current.getCoordinate().getXAxis() === target.getCoordinate().getXAxis()
         && current.getCoordinate().getYAxis() === target.getCoordinate().getYAxis()));
-    console.log;
     console.log('Atingimos o objetivo');
     console.log('Quantidade de iterações: ', closedList.getNodes().length - 1);
 }
