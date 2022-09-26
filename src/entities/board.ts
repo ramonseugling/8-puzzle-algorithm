@@ -1,5 +1,4 @@
 import { Coordinate } from "./coordinate"
-import { Matrix } from "./matrix"
 import { Nodex } from "./nodex"
 
 export class Board{
@@ -7,16 +6,55 @@ export class Board{
     initial!: Coordinate
     target!: Coordinate
  
-    constructor(matrix: Matrix) {
+    constructor(width: number, heigh: number, initial: Coordinate, target: Coordinate) {
         this.nodexs = []
-        for (let xAxis = 0; xAxis < matrix.width; xAxis++) { 
+        for (let xAxis = 0; xAxis < width; xAxis++) { 
             this.nodexs[xAxis] = []
-            for (let yAxis = 0; yAxis < matrix.heigh; yAxis++) {
+            for (let yAxis = 0; yAxis < heigh; yAxis++) {
                 let nodex = new Nodex(new Coordinate(xAxis,yAxis))
                 this.nodexs[xAxis][yAxis] = nodex
             }          
         }
+
+        this.setInitial(initial)
+        this.setTarget(target)
     }
+
+    show(): void {
+        let line = ''
+        let custom = ''
+        //line =  '['+ this.nodexs[0][0].getCoordinate().x + ', ' + this.nodexs[0][0].getCoordinate().y + ']' + ' | ' + '[' + this.nodexs[0][1].getCoordinate().x + ', ' + this.nodexs[0][1].getCoordinate().y +']'
+        for (let yAxis = this.nodexs[0].length - 1; yAxis > -1; yAxis--) {
+            for (let xAxis = 0; xAxis < this.nodexs.length; xAxis++) {
+                if(this.nodexs[xAxis][yAxis].getCoordinate().x === this.initial.x && 
+                    this.nodexs[xAxis][yAxis].getCoordinate().y === this.initial.y){
+                    custom = `[XXXX] | `
+                } else if(this.nodexs[xAxis][yAxis].getCoordinate().x === this.target.x && 
+                this.nodexs[xAxis][yAxis].getCoordinate().y === this.target.y){
+                    custom = `[WWWW] | `
+                } else {
+                    custom = `[${this.nodexs[xAxis][yAxis].getCoordinate().x}, ${this.nodexs[xAxis][yAxis].getCoordinate().y}] | `
+                }
+                
+                line += custom
+                if(xAxis === this.nodexs[0].length - 1) {
+                    line += '\n'
+                }
+            }
+        }
+        // for (let xAxis = 0; xAxis < this.nodexs.length; xAxis++) {
+        //     for (let yAxis = this.nodexs[0].length - 1; yAxis > 0; yAxis--) {
+        //         line += `[${this.nodexs[xAxis][yAxis].getCoordinate().x}, ${this.nodexs[xAxis][yAxis].getCoordinate().y}] | `
+        //         if(yAxis === 1) {
+        //             line += '\n'
+        //         }
+        //     }
+        // }
+        console.log(line)
+    }
+    
+    getInitial(): Coordinate{ return this.initial }
+    getTarget(): Coordinate{ return this.target }
 
     setInitial(coordinate: Coordinate){
         this.initial = coordinate
@@ -25,26 +63,6 @@ export class Board{
     setTarget(coordinate: Coordinate){
         this.target = coordinate
     }
-
-    // getTarget(): Nodex {
-    //     for (let xAxis = 1; xAxis <= this.nodexs; xAxis++) { 
-    //         for (let yAxis = 1; yAxis <= matrix.heigh; yAxis++) {
-    //             if (this.nodexs[index].getCoordinate().x === this.target.x && this.nodexs[index].getCoordinate().y === this.target.y){
-    //                 return this.nodexs[][index]
-    //             }
-    //         }
-    //     }
-    //     return new Nodex(new Coordinate(0,0))
-    // }
-
-    // getInitial(): Nodex {
-    //     for (let index = 0; index < this.nodexs.length; index++) {
-    //         if (this.nodexs[index].getCoordinate().x === this.initial.x && this.nodexs[index].getCoordinate().y === this.initial.y){
-    //             return this.nodexs[index]
-    //         }
-    //     }
-    //     return new Nodex(new Coordinate(0,0))
-    // }
 
     getNodexByCoordinate(coordinate: Coordinate): Nodex {
         let foundNodex = new Nodex()    

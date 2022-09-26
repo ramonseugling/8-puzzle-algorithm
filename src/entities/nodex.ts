@@ -8,6 +8,7 @@ export class Nodex {
     private target!: Coordinate
     private targetDistance!: number
 
+
     constructor(coordinate?: Coordinate, target? : Coordinate){
         if(coordinate)
             this.coordinate = coordinate 
@@ -51,5 +52,8 @@ export class Nodex {
     getTargetDistance() : number{ return this.targetDistance }
     getCoordinate() : Coordinate{ return this.coordinate }
 
-    setTarget(coordinate: Coordinate) : void{ this.target = coordinate }
+    setTarget(coordinate: Coordinate) : void{
+        this.target = coordinate
+        this.calculateTargetDistance()
+    }
 }

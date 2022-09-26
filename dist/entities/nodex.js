@@ -39,7 +39,10 @@ class Nodex {
     }
     getTargetDistance() { return this.targetDistance; }
     getCoordinate() { return this.coordinate; }
-    setTarget(coordinate) { this.target = coordinate; }
+    setTarget(coordinate) {
+        this.target = coordinate;
+        this.calculateTargetDistance();
+    }
 }
 exports.Nodex = Nodex;
 //# sourceMappingURL=nodex.js.map

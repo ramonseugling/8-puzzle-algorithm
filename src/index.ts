@@ -1,56 +1,48 @@
 import { Board } from "./entities/board";
-import { Matrix } from "./entities/matrix";
 import { Coordinate } from "./entities/coordinate";
 import { Nodex } from "./entities/nodex";
 
 function main() {
-    const matrix = new Matrix(5,5)
-    const board = new Board(matrix)
-    const initialCoordinate = new Coordinate(1,2)
-    const targetCoordinate = new Coordinate(4,4)
-    const listaFechada: Nodex[]
-    const listaAberta: Nodex[]
+    const board = new Board(5/**Width */,5/**Heigh */, new Coordinate(2,1) /**Initial */, new Coordinate(4,4) /**Target */)
 
-    board.setInitial(initialCoordinate)
-    board.setTarget(targetCoordinate)
+    const initial = board.getNodexByCoordinate(board.getInitial())
+    initial.setTarget(board.getTarget())
 
-    let initial = board.getNodexByCoordinate(initialCoordinate)
-    let target = board.getNodexByCoordinate(targetCoordinate)
+    let listaAbertos = [initial] 
+    let listaFechados = []
 
-    while(true){
-        console.log('Iniciou um novo ciclo')
-        console.log(initial.getCoordinate().x)
-        console.log(initial.getCoordinate().y)
-
-        if(initial.getCoordinate().x === target.getCoordinate().x && initial.getCoordinate().y === target.getCoordinate().y){
+    let contador = 0
+    while(contador < 100){
+        let nodoAtual = listaAbertos[0]
+        board.initial = nodoAtual.getCoordinate()
+        board.show()
+        if(nodoAtual.getCoordinate().x === board.getTarget().x && nodoAtual.getCoordinate().y === board.getTarget().y){
             console.log('Atingimos o objetivo')
+            console.log('Quantidade de iterações: ', contador)
             return
         }
 
-        const vizinhos = initial.getNeighbors();
+        const vizinhos = nodoAtual.getNeighbors()
         const vizinhosValidos = vizinhos.filter((item) => { return board.exists(item.nodex.getCoordinate()) })
-        let maisProximo = vizinhosValidos[0].nodex
 
         for (let index = 0; index < vizinhosValidos.length; index++) {
-            vizinhosValidos[index].nodex.setTarget(targetCoordinate);
-            vizinhosValidos[index].nodex.calculateTargetDistance();
-            const distanciaCalculada = vizinhosValidos[index].nodex.getTargetDistance()
-            if(maisProximo.getTargetDistance() && maisProximo.getTargetDistance() > distanciaCalculada){
-                maisProximo = vizinhosValidos[index].nodex
-            }
+            vizinhosValidos[index].nodex.setTarget(board.getTarget())
+            listaAbertos.push(vizinhosValidos[index].nodex)
         }
 
-        initial = board.getNodexByCoordinate(maisProximo.getCoordinate())
+        listaFechados.push(listaAbertos.shift())
+
+        listaAbertos = listaAbertos.sort((item1 : Nodex, item2 : Nodex) => {
+            if(item1.getTargetDistance() > item2.getTargetDistance()){
+                return 1
+            }
+            if(item1.getTargetDistance() < item2.getTargetDistance()){
+                return -1
+            }
+            return 0
+        })
+        contador++
     }
-    
-    // const vizinhoDaEsquerda = board.getNodexByCoordinate(nodoAtual.getLeftNeighborCoordinate())
-    // const vizinhoDaDireita = board.getNodexByCoordinate(nodoAtual.getRightNeighborCoordinate())
-    // const vizinhoDeCima = board.getNodexByCoordinate(nodoAtual.getUpNeighborCoordinate())
-    // const vizinhoDeBaixo = board.getNodexByCoordinate(nodoAtual.getBottomNeighborCoordinate())
-    
-    // console.log('Coordenadas do alvo: ', board.getTarget().getCoordinate().x, board.getTarget().getCoordinate().y)
-    // console.log('Coordenadas do vizinho da direita: ', vizinhoDaDireita.getCoordinate().x, vizinhoDaDireita.getCoordinate().y)
-    // console.log('Calcular a distancia ao alvo do vizinho da direita', vizinhoDaDireita.getTargetDistance())
 }
 
 main()
