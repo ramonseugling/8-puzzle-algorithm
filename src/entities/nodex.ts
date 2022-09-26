@@ -8,6 +8,7 @@ export class Nodex {
     private target!: Coordinate
     private targetDistance!: number
 
+
     constructor(coordinate?: Coordinate, target? : Coordinate){
         if(coordinate)
             this.coordinate = coordinate 
