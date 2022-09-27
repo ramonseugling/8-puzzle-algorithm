@@ -1,27 +1,28 @@
-import { Position } from "../enum/position";
-import { Coordinate } from "./coordinate";
-import { Neighbor } from "./neighbor";
+import { Position } from '../enum/position'
+import { Coordinate } from './coordinate'
+import { Neighbor } from './neighbor'
 
 export class Node {
     private coordinate!: Coordinate
     private target!: Coordinate
     private targetDistance!: number
 
-    constructor(coordinate?: Coordinate, target? : Coordinate){
-        if(coordinate)
-            this.coordinate = coordinate 
-        if(target){
-            this.target = target;
+    constructor(coordinate?: Coordinate, target? : Coordinate) {
+        if (coordinate) {
+            this.coordinate = coordinate
+        }
+        if (target) {
+            this.target = target
             this.calculateTargetDistance()
-        }            
+        }
     }
 
     calculateNeigbors(): Neighbor[] {
-        const upNeighbor = new  Neighbor(this.getUpNeighborCoordinate(), Position.UP)
+        const upNeighbor = new Neighbor(this.getUpNeighborCoordinate(), Position.UP)
         const rightNeighbor = new Neighbor(this.getRightNeighborCoordinate(), Position.RIGHT)
         const bottomNeighbor = new Neighbor(this.getBottomNeighborCoordinate(), Position.BOTTOM)
         const leftNeighbor = new Neighbor(this.getLeftNeighborCoordinate(), Position.LEFT)
-        
+
         return [upNeighbor, rightNeighbor, bottomNeighbor, leftNeighbor]
     }
 
@@ -30,7 +31,7 @@ export class Node {
         const rightNeighbor = new Neighbor(this.getRightNeighborCoordinate(), Position.RIGHT)
         const bottomNeighbor = new Neighbor(this.getBottomNeighborCoordinate(), Position.BOTTOM)
         const leftNeighbor = new Neighbor(this.getLeftNeighborCoordinate(), Position.LEFT)
-        
+
         return [upNeighbor, rightNeighbor, bottomNeighbor, leftNeighbor]
     }
 
@@ -39,7 +40,7 @@ export class Node {
     }
 
     getRightNeighborCoordinate(): Node {
-        return new Node(new Coordinate(this.coordinate.getXAxis()  + 1, this.coordinate.getYAxis()))
+        return new Node(new Coordinate(this.coordinate.getXAxis() + 1, this.coordinate.getYAxis()))
     }
 
     getBottomNeighborCoordinate(): Node {
@@ -51,15 +52,20 @@ export class Node {
     }
 
     calculateTargetDistance() {
-        const xDifference = Math.abs(this.target.getXAxis() - this.coordinate.getXAxis());
-        const yDifference = Math.abs(this.target.getYAxis() - this.coordinate.getYAxis());
+        const xDifference = Math.abs(this.target.getXAxis() - this.coordinate.getXAxis())
+        const yDifference = Math.abs(this.target.getYAxis() - this.coordinate.getYAxis())
         this.targetDistance = xDifference + yDifference
     }
 
-    getTargetDistance() : number{ return this.targetDistance }
-    getCoordinate() : Coordinate{ return this.coordinate }
+    getTargetDistance() : number {
+        return this.targetDistance
+    }
 
-    setTarget(coordinate: Coordinate) : void{
+    getCoordinate() : Coordinate {
+        return this.coordinate
+    }
+
+    setTarget(coordinate: Coordinate) : void {
         this.target = coordinate
         this.calculateTargetDistance()
     }

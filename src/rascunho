@@ -18,4 +18,28 @@
     // }
 
     
+    // show(): void {
+    //     let line = ''
+    //     let custom = ''
+    //     //line =  '['+ this.node[0][0].getCoordinate().x + ', ' + this.node[0][0].getCoordinate().y + ']' + ' | ' + '[' + this.node[0][1].getCoordinate().x + ', ' + this.node[0][1].getCoordinate().y +']'
+    //     for (let yAxis = this.node[0].length - 1; yAxis > -1; yAxis--) {
+    //         for (let xAxis = 0; xAxis < this.node.length; xAxis++) {
+    //             if(this.node[xAxis][yAxis].getCoordinate().getXAxis() === this.initial.getXAxis() && 
+    //                 this.node[xAxis][yAxis].getCoordinate().y === this.initial.getYxis()){
+    //                 custom = `[XXXX] | `
+    //             } else if(this.node[xAxis][yAxis].getCoordinate().x === this.target.x && 
+    //             this.node[xAxis][yAxis].getCoordinate().y === this.target.y){
+    //                 custom = `[WWWW] | `
+    //             } else {
+    //                 custom = `[${this.node[xAxis][yAxis].getCoordinate().x}, ${this.node[xAxis][yAxis].getCoordinate().y}] | `
+    //             }
+                
+    //             line += custom
+    //             if(xAxis === this.node[0].length - 1) {
+    //                 line += '\n'
+    //             }
+    //         }
+    //     }
+    // }
+    
 

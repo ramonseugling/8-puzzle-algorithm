@@ -1,13 +1,16 @@
-import { Node } from "./node";
+import { Node } from './node'
 
 export class ClosedList {
     private nodes!: Node[]
-    constructor(){
+    constructor() {
         this.nodes = []
     }
-    getNodes(): Node[] { return this.nodes}
+
+    getNodes(): Node[] {
+        return this.nodes
+    }
     add (node: Node | undefined): void {
-        if (node){
+        if (node) {
             this.nodes.push(node)
         }
     }

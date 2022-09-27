@@ -1,14 +1,14 @@
-import { Board } from "./entities/board";
-import { ClosedList } from "./entities/closed-list";
-import { Coordinate } from "./entities/coordinate";
-import { Node } from "./entities/node";
-import { OpenList } from "./entities/open-list";
-import { ProgramParams } from "./entities/program-params";
+import { Board } from './entities/board'
+import { ClosedList } from './entities/closed-list'
+import { Coordinate } from './entities/coordinate'
+import { Node } from './entities/node'
+import { OpenList } from './entities/open-list'
+import { ProgramParams } from './entities/program-params'
 
-function getProgramParams() : ProgramParams{
+function getProgramParams() : ProgramParams {
     return {
-        initialCoordinate: new Coordinate(1,2),
-        targetCoordinate: new Coordinate(4,2),
+        initialCoordinate: new Coordinate(1, 2),
+        targetCoordinate: new Coordinate(4, 2),
         boardMatrix: { width: 5, heigh: 5 }
     }
 }
@@ -23,11 +23,13 @@ function main() {
     const closedList = new ClosedList()
     let current : Node
 
-    do{
+    do {
         current = openList.getFirst()
-      
+
         let neighbors = current.getNeighbors()
-        neighbors = neighbors.filter((item) => { return board.hasNodeByCoordinate(item.node.getCoordinate()) })
+        neighbors = neighbors.filter((item) => {
+            return board.hasNodeByCoordinate(item.node.getCoordinate())
+        })
 
         for (let index = 0; index < neighbors.length; index++) {
             neighbors[index].node.setTarget(target.getCoordinate())
@@ -35,8 +37,8 @@ function main() {
         }
         closedList.add(openList.exitFirst())
         openList.sort()
-    }while(!(current.getCoordinate().getXAxis() === target.getCoordinate().getXAxis()
-        && current.getCoordinate().getYAxis() === target.getCoordinate().getYAxis()))
+    } while (!(current.getCoordinate().getXAxis() === target.getCoordinate().getXAxis() &&
+       current.getCoordinate().getYAxis() === target.getCoordinate().getYAxis()))
     console.log('Atingimos o objetivo')
     console.log('Quantidade de iterações: ', closedList.getNodes().length - 1)
 }
