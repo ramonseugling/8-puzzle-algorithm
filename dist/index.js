@@ -11,6 +11,27 @@ function getProgramParams() {
         boardMatrix: { width: 3, heigh: 3 }
     };
 }
+function getValidNeighbors(board, node) {
+    let neighbors = node.getNeighbors();
+    neighbors = neighbors.filter((item) => {
+        return board.hasNodeByCoordinate(item.node.getCoordinate());
+    });
+    return neighbors;
+}
+function calculateNeighborsTargetDistance(neighbors, target) {
+    for (let index = 0; index < neighbors.length; index++) {
+        neighbors[index].node.setTarget(target.getCoordinate());
+    }
+}
+function addNeighborsToOpenList(neighbors, openList) {
+    for (let index = 0; index < neighbors.length; index++) {
+        openList.add(neighbors[index].node);
+    }
+}
+function problemSolved(current, target) {
+    return current.getCoordinate().getXAxis() === target.getCoordinate().getXAxis() &&
+        current.getCoordinate().getYAxis() === target.getCoordinate().getYAxis();
+}
 function main() {
     const { initialCoordinate, targetCoordinate, boardMatrix } = getProgramParams();
     const board = new board_1.Board(boardMatrix);
@@ -23,18 +44,12 @@ function main() {
     do {
         current = openList.getFirst();
         board.show(current.getCoordinate(), target.getCoordinate());
-        let neighbors = current.getNeighbors();
-        neighbors = neighbors.filter((item) => {
-            return board.hasNodeByCoordinate(item.node.getCoordinate());
-        });
-        for (let index = 0; index < neighbors.length; index++) {
-            neighbors[index].node.setTarget(target.getCoordinate());
-            openList.add(neighbors[index].node);
-        }
+        const neighbors = getValidNeighbors(board, current);
+        calculateNeighborsTargetDistance(neighbors, target);
+        addNeighborsToOpenList(neighbors, openList);
         closedList.add(openList.exitFirst());
         openList.sort();
-    } while (!(current.getCoordinate().getXAxis() === target.getCoordinate().getXAxis() &&
-        current.getCoordinate().getYAxis() === target.getCoordinate().getYAxis()));
+    } while (!problemSolved(current, target));
     console.log('Atingimos o objetivo');
     console.log('Quantidade de iterações: ', closedList.getNodes().length - 1);
     console.log('Quantidad de nodos visitados: ', closedList.getNodes().length);
