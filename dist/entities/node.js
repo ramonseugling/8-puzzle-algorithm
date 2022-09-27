@@ -6,12 +6,19 @@ const coordinate_1 = require("./coordinate");
 const neighbor_1 = require("./neighbor");
 class Node {
     constructor(coordinate, target) {
-        if (coordinate)
+        if (coordinate) {
             this.coordinate = coordinate;
+        }
         if (target) {
             this.target = target;
             this.calculateTargetDistance();
         }
+    }
+    getValue() {
+        return this.value;
+    }
+    setValue(param) {
+        this.value = param;
     }
     calculateNeigbors() {
         const upNeighbor = new neighbor_1.Neighbor(this.getUpNeighborCoordinate(), position_1.Position.UP);
@@ -40,12 +47,16 @@ class Node {
         return new Node(new coordinate_1.Coordinate(this.coordinate.getXAxis() - 1, this.coordinate.getYAxis()));
     }
     calculateTargetDistance() {
-        let xDifference = Math.abs(this.target.getXAxis() - this.coordinate.getXAxis());
-        let yDifference = Math.abs(this.target.getYAxis() - this.coordinate.getYAxis());
+        const xDifference = Math.abs(this.target.getXAxis() - this.coordinate.getXAxis());
+        const yDifference = Math.abs(this.target.getYAxis() - this.coordinate.getYAxis());
         this.targetDistance = xDifference + yDifference;
     }
-    getTargetDistance() { return this.targetDistance; }
-    getCoordinate() { return this.coordinate; }
+    getTargetDistance() {
+        return this.targetDistance;
+    }
+    getCoordinate() {
+        return this.coordinate;
+    }
     setTarget(coordinate) {
         this.target = coordinate;
         this.calculateTargetDistance();

@@ -6,8 +6,9 @@ class Neighbor {
         if (node) {
             this.node = node;
         }
-        if (position)
+        if (position) {
             this.position = position;
+        }
     }
 }
 exports.Neighbor = Neighbor;

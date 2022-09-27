@@ -6,6 +6,7 @@ export class Node {
     private coordinate!: Coordinate
     private target!: Coordinate
     private targetDistance!: number
+    private value!: number
 
     constructor(coordinate?: Coordinate, target? : Coordinate) {
         if (coordinate) {
@@ -15,6 +16,14 @@ export class Node {
             this.target = target
             this.calculateTargetDistance()
         }
+    }
+
+    getValue(): number {
+        return this.value
+    }
+
+    setValue(param: number) {
+        this.value = param
     }
 
     calculateNeigbors(): Neighbor[] {

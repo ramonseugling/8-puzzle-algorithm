@@ -6,9 +6,9 @@ const coordinate_1 = require("./entities/coordinate");
 const open_list_1 = require("./entities/open-list");
 function getProgramParams() {
     return {
-        initialCoordinate: new coordinate_1.Coordinate(1, 2),
-        targetCoordinate: new coordinate_1.Coordinate(4, 2),
-        boardMatrix: { width: 5, heigh: 5 }
+        initialCoordinate: new coordinate_1.Coordinate(2, 0),
+        targetCoordinate: new coordinate_1.Coordinate(0, 2),
+        boardMatrix: { width: 3, heigh: 3 }
     };
 }
 function main() {
@@ -22,16 +22,19 @@ function main() {
     let current;
     do {
         current = openList.getFirst();
+        board.show(current.getCoordinate(), target.getCoordinate());
         let neighbors = current.getNeighbors();
-        neighbors = neighbors.filter((item) => { return board.hasNodeByCoordinate(item.node.getCoordinate()); });
+        neighbors = neighbors.filter((item) => {
+            return board.hasNodeByCoordinate(item.node.getCoordinate());
+        });
         for (let index = 0; index < neighbors.length; index++) {
             neighbors[index].node.setTarget(target.getCoordinate());
             openList.add(neighbors[index].node);
         }
         closedList.add(openList.exitFirst());
         openList.sort();
-    } while (!(current.getCoordinate().getXAxis() === target.getCoordinate().getXAxis()
-        && current.getCoordinate().getYAxis() === target.getCoordinate().getYAxis()));
+    } while (!(current.getCoordinate().getXAxis() === target.getCoordinate().getXAxis() &&
+        current.getCoordinate().getYAxis() === target.getCoordinate().getYAxis()));
     console.log('Atingimos o objetivo');
     console.log('Quantidade de iterações: ', closedList.getNodes().length - 1);
 }

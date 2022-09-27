@@ -7,9 +7,9 @@ import { ProgramParams } from './entities/program-params'
 
 function getProgramParams() : ProgramParams {
     return {
-        initialCoordinate: new Coordinate(1, 2),
-        targetCoordinate: new Coordinate(4, 2),
-        boardMatrix: { width: 5, heigh: 5 }
+        initialCoordinate: new Coordinate(2, 0),
+        targetCoordinate: new Coordinate(0, 2),
+        boardMatrix: { width: 3, heigh: 3 }
     }
 }
 
@@ -25,7 +25,7 @@ function main() {
 
     do {
         current = openList.getFirst()
-
+        board.show(current.getCoordinate(), target.getCoordinate())
         let neighbors = current.getNeighbors()
         neighbors = neighbors.filter((item) => {
             return board.hasNodeByCoordinate(item.node.getCoordinate())

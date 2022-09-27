@@ -5,7 +5,9 @@ class ClosedList {
     constructor() {
         this.nodes = [];
     }
-    getNodes() { return this.nodes; }
+    getNodes() {
+        return this.nodes;
+    }
     add(node) {
         if (node) {
             this.nodes.push(node);

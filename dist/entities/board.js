@@ -8,18 +8,45 @@ class Board {
         this.initialize(width, heigh);
     }
     initialize(width, heigh) {
-        this.node = [];
+        this.nodes = [];
+        let value = 1;
         for (let xAxis = 0; xAxis < width; xAxis++) {
-            this.node[xAxis] = [];
+            this.nodes[xAxis] = [new node_1.Node(), new node_1.Node(), new node_1.Node()];
             for (let yAxis = 0; yAxis < heigh; yAxis++) {
-                let node = new node_1.Node(new coordinate_1.Coordinate(xAxis, yAxis));
-                this.node[xAxis][yAxis] = node;
+                const node = new node_1.Node(new coordinate_1.Coordinate(xAxis, yAxis));
+                node.setValue(value);
+                value++;
+                this.nodes[xAxis][yAxis] = node;
             }
         }
     }
+    show(initial, target) {
+        let line = '';
+        let custom = '';
+        for (let yAxis = this.nodes[0].length - 1; yAxis > -1; yAxis--) {
+            for (let xAxis = 0; xAxis < this.nodes.length; xAxis++) {
+                if (this.nodes[xAxis][yAxis].getCoordinate().getXAxis() === initial.getXAxis() &&
+                    this.nodes[xAxis][yAxis].getCoordinate().getYAxis() === initial.getYAxis()) {
+                    custom = `[X] | `;
+                }
+                else if (this.nodes[xAxis][yAxis].getCoordinate().getXAxis() === target.getXAxis() &&
+                    this.nodes[xAxis][yAxis].getCoordinate().getYAxis() === target.getYAxis()) {
+                    custom = `[W] | `;
+                }
+                else {
+                    custom = `[${this.nodes[xAxis][yAxis].getValue()}] | `;
+                }
+                line += custom;
+                if (xAxis === this.nodes[0].length - 1) {
+                    line += '\n';
+                }
+            }
+        }
+        console.log(line);
+    }
     getNodeByCoordinate(param) {
         let foundNode = new node_1.Node();
-        this.node.forEach((column) => {
+        this.nodes.forEach((column) => {
             column.forEach((item) => {
                 if (item.getCoordinate().getXAxis() === param.getXAxis() && item.getCoordinate().getYAxis() === param.getYAxis()) {
                     foundNode = item;

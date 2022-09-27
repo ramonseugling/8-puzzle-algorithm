@@ -23,8 +23,12 @@ class OpenList {
             return 0;
         });
     }
-    getNodes() { return this.nodes; }
-    getFirst() { return this.nodes[0]; }
+    getNodes() {
+        return this.nodes;
+    }
+    getFirst() {
+        return this.nodes[0];
+    }
 }
 exports.OpenList = OpenList;
 //# sourceMappingURL=open-list.js.map
