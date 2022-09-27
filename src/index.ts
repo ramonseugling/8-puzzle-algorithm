@@ -41,6 +41,7 @@ function main() {
        current.getCoordinate().getYAxis() === target.getCoordinate().getYAxis()))
     console.log('Atingimos o objetivo')
     console.log('Quantidade de iterações: ', closedList.getNodes().length - 1)
+    console.log('Quantidad de nodos visitados: ', closedList.getNodes().length )
 }
 
 main()
