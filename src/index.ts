@@ -14,7 +14,7 @@ function getProgramParams() : ProgramParams{
 }
 
 function main() {
-    const {initialCoordinate, targetCoordinate, boardMatrix} = getProgramParams()
+    const { initialCoordinate, targetCoordinate, boardMatrix } = getProgramParams()
     const board = new Board(boardMatrix)
     const initial = board.getNodeByCoordinate(initialCoordinate)
     initial.setTarget(targetCoordinate)

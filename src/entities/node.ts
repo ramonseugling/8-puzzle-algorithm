@@ -51,8 +51,8 @@ export class Node {
     }
 
     calculateTargetDistance() {
-        let xDifference = Math.abs(this.target.getXAxis() - this.coordinate.getXAxis());
-        let yDifference = Math.abs(this.target.getYAxis() - this.coordinate.getYAxis());
+        const xDifference = Math.abs(this.target.getXAxis() - this.coordinate.getXAxis());
+        const yDifference = Math.abs(this.target.getYAxis() - this.coordinate.getYAxis());
         this.targetDistance = xDifference + yDifference
     }
 

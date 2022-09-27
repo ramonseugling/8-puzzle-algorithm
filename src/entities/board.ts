@@ -14,7 +14,7 @@ export class Board{
         for (let xAxis = 0; xAxis < width; xAxis++) { 
             this.node[xAxis] = []
             for (let yAxis = 0; yAxis < heigh; yAxis++) {
-                let node = new Node(new Coordinate(xAxis,yAxis))
+                const node = new Node(new Coordinate(xAxis,yAxis))
                 this.node[xAxis][yAxis] = node
             }          
         }
