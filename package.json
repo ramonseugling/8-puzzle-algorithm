@@ -1,0 +1,26 @@
+{
+    "name": "8-puzzle",
+    "version": "1.0.0",
+    "description": "This project aims to create a AI to solve the 8-puzzlu",
+    "repository": "https://github.com/ramonseugling/8-puzzle-algorithm",
+    "license": "",
+    "private": false,
+    "author": {
+        "email": "ramonseugling@gmail.com",
+        "name": "Ramon Seugling"
+    },
+    "contributors": [
+        {
+            "email": "denysp.gaspar@gmail.com",
+            "name": "Denys Gaspar"
+        }
+    ],
+    "scripts": {
+        "lint": "eslint . --ext .ts"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.38.1",
+        "@typescript-eslint/parser": "^5.38.1",
+        "eslint": "^8.24.0"
+    }
+}
