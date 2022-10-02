@@ -1,71 +1,29 @@
-import { Coordinate } from './coordinate'
-import { Matrix } from './matrix'
-import { Node } from './node'
+// import { Piece } from './piece'
 
 export class Board {
-    nodes!: Node[][]
+    // private pieces!: Piece[][]
+    private value!: number
 
-    constructor({ width, heigh }: Matrix) {
-        this.initialize(width, heigh)
+    constructor(value?: number) {
+        this.value = value ? value : Math.floor(Math.random() * 100)
     }
 
-    private initialize(width: number, heigh: number): void {
-        this.nodes = []
-        let value = 1
-        for (let xAxis = 0; xAxis < width; xAxis++) {
-            this.nodes[xAxis] = [new Node(), new Node(), new Node()]
-            for (let yAxis = 0; yAxis < heigh; yAxis++) {
-                const node = new Node(new Coordinate(xAxis, yAxis))
-                node.setValue(value)
-                value ++
-                this.nodes[xAxis][yAxis] = node
-            }
-        }
+    public set(value?: number): void {
+        this.value = value ? value : Math.floor(Math.random() * 100)
     }
-
-    show(initial: Coordinate, target: Coordinate): void {
-        let line = ''
-        let custom = ''
-        for ( let yAxis = this.nodes[0].length - 1; yAxis > -1; yAxis--) {
-            for (let xAxis = 0; xAxis < this.nodes.length; xAxis++) {
-                if (this.nodes[xAxis][yAxis].getCoordinate().getXAxis() === initial.getXAxis() &&
-                    this.nodes[xAxis][yAxis].getCoordinate().getYAxis() === initial.getYAxis()) {
-                    custom = `[X] | `
-                } else if (this.nodes[xAxis][yAxis].getCoordinate().getXAxis() === target.getXAxis() &&
-                this.nodes[xAxis][yAxis].getCoordinate().getYAxis() === target.getYAxis()) {
-                    custom = `[W] | `
-                } else {
-                    // custom = `[${this.nodes[xAxis][yAxis].getCoordinate().getXAxis()}, ${this.nodes[xAxis][yAxis].getCoordinate().getYAxis()}] | `
-                    custom = `[${this.nodes[xAxis][yAxis].getValue()}] | `
-                }
-
-                line += custom
-                if (xAxis === this.nodes[0].length - 1) {
-                    line += '\n'
-                }
-            }
-        }
-        console.log(line)
+    public get(): number {
+        return this.value
     }
-
-    getNodeByCoordinate(param: Coordinate): Node {
-        let foundNode = new Node()
-
-        this.nodes.forEach((column) => {
-            column.forEach((item) => {
-                if (item.getCoordinate().getXAxis() === param.getXAxis() && item.getCoordinate().getYAxis() === param.getYAxis()) {
-                    foundNode = item
-                }
-            })
-        })
-        return foundNode
-    }
-
-    hasNodeByCoordinate(param: Coordinate) : boolean {
-        if (!param) {
-            return false
-        }
-        const result = this.getNodeByCoordinate(param).getCoordinate()
-        return result ? true : false
-    }
+    // public initialize(): void {
+    //     this.pieces = []
+    //     let value = 1
+    //     for (let xAxis = 0; xAxis < 3; xAxis++) {
+    //         this.pieces[xAxis] = [new Piece(value), new Piece(value), new Piece(value)]
+    //         for (let yAxis = 0; yAxis < 3; yAxis++) {
+    //             const piece = new Piece(value)
+    //             value ++
+    //             this.pieces[xAxis][yAxis] = piece
+    //         }
+    //     }
+    // }
 }

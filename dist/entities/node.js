@@ -1,65 +1,54 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Node = void 0;
-const position_1 = require("../enum/position");
-const coordinate_1 = require("./coordinate");
-const neighbor_1 = require("./neighbor");
+const board_1 = require("./board");
 class Node {
-    constructor(coordinate, target) {
-        if (coordinate) {
-            this.coordinate = coordinate;
+    constructor(father, board, target, level) {
+        if (father) {
+            this.father = father;
+            this.board = new board_1.Board(this.father.getBoard().get() + 1);
         }
         if (target) {
             this.target = target;
-            this.calculateTargetDistance();
+        }
+        if (board) {
+            this.board = board;
+            const cost = this.calculateCost();
+            this.setCost(cost);
+        }
+        if (!level) {
+            this.level = 0;
+        }
+        else {
+            this.level = level;
         }
     }
-    getValue() {
-        return this.value;
+    calculateCost() {
+        const cost = Math.abs(this.board.get() - this.target.get());
+        return cost;
     }
-    setValue(param) {
-        this.value = param;
+    getBoard() {
+        return this.board;
     }
-    calculateNeigbors() {
-        const upNeighbor = new neighbor_1.Neighbor(this.getUpNeighborCoordinate(), position_1.Position.UP);
-        const rightNeighbor = new neighbor_1.Neighbor(this.getRightNeighborCoordinate(), position_1.Position.RIGHT);
-        const bottomNeighbor = new neighbor_1.Neighbor(this.getBottomNeighborCoordinate(), position_1.Position.BOTTOM);
-        const leftNeighbor = new neighbor_1.Neighbor(this.getLeftNeighborCoordinate(), position_1.Position.LEFT);
-        return [upNeighbor, rightNeighbor, bottomNeighbor, leftNeighbor];
+    getTarget() {
+        return this.target;
     }
-    getNeighbors() {
-        const upNeighbor = new neighbor_1.Neighbor(this.getUpNeighborCoordinate(), position_1.Position.UP);
-        const rightNeighbor = new neighbor_1.Neighbor(this.getRightNeighborCoordinate(), position_1.Position.RIGHT);
-        const bottomNeighbor = new neighbor_1.Neighbor(this.getBottomNeighborCoordinate(), position_1.Position.BOTTOM);
-        const leftNeighbor = new neighbor_1.Neighbor(this.getLeftNeighborCoordinate(), position_1.Position.LEFT);
-        return [upNeighbor, rightNeighbor, bottomNeighbor, leftNeighbor];
+    getLevel() {
+        return this.level;
     }
-    getUpNeighborCoordinate() {
-        return new Node(new coordinate_1.Coordinate(this.coordinate.getXAxis(), this.coordinate.getYAxis() + 1));
+    getChild() {
+        const childBoard = new board_1.Board(this.getBoard().get() + 1);
+        const childLevel = this.getLevel() + 1;
+        return new Node(this, childBoard, this.getTarget(), childLevel);
     }
-    getRightNeighborCoordinate() {
-        return new Node(new coordinate_1.Coordinate(this.coordinate.getXAxis() + 1, this.coordinate.getYAxis()));
+    getCost() {
+        return this.cost;
     }
-    getBottomNeighborCoordinate() {
-        return new Node(new coordinate_1.Coordinate(this.coordinate.getXAxis(), this.coordinate.getYAxis() - 1));
+    setCost(cost) {
+        this.cost = cost;
     }
-    getLeftNeighborCoordinate() {
-        return new Node(new coordinate_1.Coordinate(this.coordinate.getXAxis() - 1, this.coordinate.getYAxis()));
-    }
-    calculateTargetDistance() {
-        const xDifference = Math.abs(this.target.getXAxis() - this.coordinate.getXAxis());
-        const yDifference = Math.abs(this.target.getYAxis() - this.coordinate.getYAxis());
-        this.targetDistance = xDifference + yDifference;
-    }
-    getTargetDistance() {
-        return this.targetDistance;
-    }
-    getCoordinate() {
-        return this.coordinate;
-    }
-    setTarget(coordinate) {
-        this.target = coordinate;
-        this.calculateTargetDistance();
+    setBoard(board) {
+        this.board = board;
     }
 }
 exports.Node = Node;

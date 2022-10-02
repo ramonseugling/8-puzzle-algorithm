@@ -1,81 +1,65 @@
-import { Position } from '../enum/position'
-import { Coordinate } from './coordinate'
-import { Neighbor } from './neighbor'
+import { Board } from './board'
 
 export class Node {
-    private coordinate!: Coordinate
-    private target!: Coordinate
-    private targetDistance!: number
-    private value!: number
+    private board!: Board
+    private target!: Board
+    private father!: Node
+    private cost!: number
+    private level!: number
 
-    constructor(coordinate?: Coordinate, target? : Coordinate) {
-        if (coordinate) {
-            this.coordinate = coordinate
+    constructor(father?: Node, board?: Board, target?: Board, level?: number) {
+        if (father) {
+            this.father = father
+            this.board = new Board(this.father.getBoard().get()+1)
         }
         if (target) {
             this.target = target
-            this.calculateTargetDistance()
+        }
+
+        if (board) {
+            this.board = board
+            const cost = this.calculateCost()
+            this.setCost(cost)
+        }
+
+        if (!level) {
+            this.level = 0
+        } else {
+            this.level = level
         }
     }
 
-    getValue(): number {
-        return this.value
+    public calculateCost(): number {
+        const cost = Math.abs(this.board.get() - this.target.get())
+        return cost
     }
 
-    setValue(param: number) {
-        this.value = param
+    public getBoard(): Board {
+        return this.board
     }
 
-    calculateNeigbors(): Neighbor[] {
-        const upNeighbor = new Neighbor(this.getUpNeighborCoordinate(), Position.UP)
-        const rightNeighbor = new Neighbor(this.getRightNeighborCoordinate(), Position.RIGHT)
-        const bottomNeighbor = new Neighbor(this.getBottomNeighborCoordinate(), Position.BOTTOM)
-        const leftNeighbor = new Neighbor(this.getLeftNeighborCoordinate(), Position.LEFT)
-
-        return [upNeighbor, rightNeighbor, bottomNeighbor, leftNeighbor]
+    public getTarget(): Board {
+        return this.target
+    }
+    public getLevel(): number {
+        return this.level
     }
 
-    getNeighbors(): Neighbor[] {
-        const upNeighbor = new Neighbor(this.getUpNeighborCoordinate(), Position.UP)
-        const rightNeighbor = new Neighbor(this.getRightNeighborCoordinate(), Position.RIGHT)
-        const bottomNeighbor = new Neighbor(this.getBottomNeighborCoordinate(), Position.BOTTOM)
-        const leftNeighbor = new Neighbor(this.getLeftNeighborCoordinate(), Position.LEFT)
-
-        return [upNeighbor, rightNeighbor, bottomNeighbor, leftNeighbor]
+    public getChild(): Node {
+        const childBoard = new Board(this.getBoard().get() + 1)
+        const childLevel: number = this.getLevel() + 1
+        return new Node(this, childBoard, this.getTarget(), childLevel)
     }
 
-    getUpNeighborCoordinate(): Node {
-        return new Node(new Coordinate(this.coordinate.getXAxis(), this.coordinate.getYAxis() + 1))
+    public getCost(): number {
+        return this.cost
     }
 
-    getRightNeighborCoordinate(): Node {
-        return new Node(new Coordinate(this.coordinate.getXAxis() + 1, this.coordinate.getYAxis()))
+    public setCost(cost: number) {
+        this.cost = cost
     }
 
-    getBottomNeighborCoordinate(): Node {
-        return new Node(new Coordinate(this.coordinate.getXAxis(), this.coordinate.getYAxis() - 1))
-    }
-
-    getLeftNeighborCoordinate(): Node {
-        return new Node(new Coordinate(this.coordinate.getXAxis() - 1, this.coordinate.getYAxis()))
-    }
-
-    calculateTargetDistance() {
-        const xDifference = Math.abs(this.target.getXAxis() - this.coordinate.getXAxis())
-        const yDifference = Math.abs(this.target.getYAxis() - this.coordinate.getYAxis())
-        this.targetDistance = xDifference + yDifference
-    }
-
-    getTargetDistance() : number {
-        return this.targetDistance
-    }
-
-    getCoordinate() : Coordinate {
-        return this.coordinate
-    }
-
-    setTarget(coordinate: Coordinate) : void {
-        this.target = coordinate
-        this.calculateTargetDistance()
+    public setBoard(board: Board) {
+        this.board = board
     }
 }
