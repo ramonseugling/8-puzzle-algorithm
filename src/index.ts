@@ -3,20 +3,19 @@ import { TARGET } from './constants/target'
 import { Board } from './entities/board'
 import { Node } from './entities/node'
 
+// eslint-disable-next-line max-lines-per-function
 function play(root: Node): Node {
     const openList: Node[] = [root]
     const closedList = []
 
     let current = new Node()
-    let counter = 0
-    while (openList.length && counter < 2000) {
-        counter ++
-        console.log('==============')
-        console.log('Counter: ', counter)
-        
+    // let counter = 0
+    while (openList.length) {
+        // counter ++
+        // console.log('==============')
+        // console.log('Counter: ', counter)
         current = openList.shift() as Node
         closedList.push(current)
-        
         for (let index = 0; index < current.getBoard().get().length; index++) {
             let line = ''
             for (let indox = 0; indox < current.getBoard().get()[index].length; indox++) {
@@ -33,7 +32,7 @@ function play(root: Node): Node {
         for (let index = 0; index < openList.length; index++) {
             const temp = openList[index]
             for (let childIndex = 0; childIndex < children.length; childIndex++) {
-                if (children[childIndex].equal(temp)){
+                if (children[childIndex].equal(temp)) {
                     children.splice(childIndex, 1)
                 }
             }
@@ -42,7 +41,7 @@ function play(root: Node): Node {
         for (let index = 0; index < closedList.length; index++) {
             const temp = closedList[index]
             for (let childIndex = 0; childIndex < children.length; childIndex++) {
-                if (children[childIndex].equal(temp)){
+                if (children[childIndex].equal(temp)) {
                     children.splice(childIndex, 1)
                 }
             }
@@ -50,7 +49,7 @@ function play(root: Node): Node {
 
         for (let index = 0; index < children.length; index++) {
             openList.push(children[index]) 
-        }       
+        }
 
         openList.sort((item1, item2) => {
             if (item1.getCost() > item2.getCost()) {
@@ -61,16 +60,9 @@ function play(root: Node): Node {
             }
             return 0
         })
-        console.log('Lista aberta: ', openList)
+        // console.log('Lista aberta: ', openList)
     }
-
-    if (!current) {
-        console.log('Error CURRENT undefined')
-        return new Node()
-    } else {
-        return current
-    }
-
+    return current
 }
 
 function main() {

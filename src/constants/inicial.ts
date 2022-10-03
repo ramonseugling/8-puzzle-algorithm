@@ -1,5 +1,5 @@
 export const INICIAL: Array<Array<number>>= [
-    [2,3,6],
-    [1,0,4],
-    [7,5,8]
+    [1, 2, 6],
+    [4, 0, 3],
+    [5, 7, 8]
 ]

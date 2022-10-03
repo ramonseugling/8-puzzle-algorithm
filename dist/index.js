@@ -8,11 +8,7 @@ function play(root) {
     const openList = [root];
     const closedList = [];
     let current = new node_1.Node();
-    let counter = 0;
-    while (openList.length && counter < 2000) {
-        counter++;
-        console.log('==============');
-        console.log('Counter: ', counter);
+    while (openList.length) {
         current = openList.shift();
         closedList.push(current);
         for (let index = 0; index < current.getBoard().get().length; index++) {
@@ -55,15 +51,8 @@ function play(root) {
             }
             return 0;
         });
-        console.log('Lista aberta: ', openList);
     }
-    if (!current) {
-        console.log('Error CURRENT undefined');
-        return new node_1.Node();
-    }
-    else {
-        return current;
-    }
+    return current;
 }
 function main() {
     const root = new node_1.Node(undefined, new board_1.Board(inicial_1.INICIAL), 0);
