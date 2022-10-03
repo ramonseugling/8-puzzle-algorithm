@@ -1,29 +1,45 @@
-// import { Piece } from './piece'
+import { INICIAL } from "../constants/inicial"
 
 export class Board {
-    // private pieces!: Piece[][]
-    private value!: number
+    private value?: Array<Array<number>>
 
-    constructor(value?: number) {
-        this.value = value ? value : Math.floor(Math.random() * 100)
+    constructor(param?: Array<Array<number>>) {
+        if(param) {
+            this.value = []
+            for (let xAxis = 0; xAxis < param.length; xAxis++) {
+                this.value[xAxis] = []
+                for (let yAxis = 0; yAxis < param[xAxis].length; yAxis++) {
+                    this.value[xAxis][yAxis]=param[xAxis][yAxis]
+                }
+            }
+        } else {
+            this.value = undefined
+        }
     }
 
-    public set(value?: number): void {
-        this.value = value ? value : Math.floor(Math.random() * 100)
+    public getBlank(): Array<number>{
+        if(!this.value){
+            return [0]
+        }
+
+        let blankCoordinate: number[] = [-1, -1]
+
+        for (let xAxis = 0; xAxis < this.value.length; xAxis++) {
+            for (let yAxis = 0; yAxis < this.value[xAxis].length; yAxis++) {
+                if(this.value[xAxis][yAxis] === 0) {
+                    blankCoordinate = [xAxis, yAxis]
+                }
+            }
+        }
+        return blankCoordinate
     }
-    public get(): number {
-        return this.value
+
+    public set(coordinate: Array<number>, value: number): void {
+        if(this.value){
+            this.value[coordinate[0]][coordinate[1]] = value
+        }
     }
-    // public initialize(): void {
-    //     this.pieces = []
-    //     let value = 1
-    //     for (let xAxis = 0; xAxis < 3; xAxis++) {
-    //         this.pieces[xAxis] = [new Piece(value), new Piece(value), new Piece(value)]
-    //         for (let yAxis = 0; yAxis < 3; yAxis++) {
-    //             const piece = new Piece(value)
-    //             value ++
-    //             this.pieces[xAxis][yAxis] = piece
-    //         }
-    //     }
-    // }
+    public get(): Array<Array<number>> {
+        return this.value || []
+    }
 }
