@@ -1,10 +1,8 @@
-import { INICIAL } from "../constants/inicial"
-
 export class Board {
     private value?: Array<Array<number>>
 
     constructor(param?: Array<Array<number>>) {
-        if(param) {
+        if (param) {
             this.value = []
             for (let xAxis = 0; xAxis < param.length; xAxis++) {
                 this.value[xAxis] = []
@@ -17,8 +15,8 @@ export class Board {
         }
     }
 
-    public getBlank(): Array<number>{
-        if(!this.value){
+    public getBlank(): Array<number> {
+        if (!this.value) {
             return [0]
         }
 
@@ -26,7 +24,7 @@ export class Board {
 
         for (let xAxis = 0; xAxis < this.value.length; xAxis++) {
             for (let yAxis = 0; yAxis < this.value[xAxis].length; yAxis++) {
-                if(this.value[xAxis][yAxis] === 0) {
+                if (this.value[xAxis][yAxis] === 0) {
                     blankCoordinate = [xAxis, yAxis]
                 }
             }
@@ -35,7 +33,7 @@ export class Board {
     }
 
     public set(coordinate: Array<number>, value: number): void {
-        if(this.value){
+        if (this.value) {
             this.value[coordinate[0]][coordinate[1]] = value
         }
     }

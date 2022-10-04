@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Node = void 0;
 const target_1 = require("../constants/target");
+const variation_1 = require("../constants/variation");
 const board_1 = require("./board");
 class Node {
     constructor(father, board, level) {
@@ -14,13 +15,46 @@ class Node {
             this.setCost(cost);
         }
         if (!level) {
-            this.level = 0;
+            this.level = -1;
         }
         else {
             this.level = level;
         }
     }
-    calculateCost() {
+    uniformCost() {
+        let diference = 0;
+        if (this.level > -1) {
+            return 1;
+        }
+        diference += this.level;
+        return diference;
+    }
+    veryComplexHeuristic() {
+        let diference = 0;
+        let diference1 = 1;
+        for (let xAxis = 0; xAxis < target_1.TARGET.length; xAxis++) {
+            for (let yAxis = 0; yAxis < target_1.TARGET[xAxis].length; yAxis++) {
+                if (this.board.get()[xAxis][yAxis] !== target_1.TARGET[xAxis][yAxis]) {
+                    const block = this.board.get()[xAxis][yAxis];
+                    for (let targetXAxis = 0; targetXAxis < target_1.TARGET.length; targetXAxis++) {
+                        for (let targetYAxis = 0; targetYAxis < target_1.TARGET[targetXAxis].length; targetYAxis++) {
+                            if (target_1.TARGET[targetXAxis][targetYAxis] !== block) {
+                                diference1 = Math.abs((xAxis + yAxis) - (targetXAxis + targetYAxis));
+                            }
+                        }
+                    }
+                    diference *= diference1;
+                    diference1 = 1;
+                    diference++;
+                }
+            }
+        }
+        if (this.level) {
+            diference += this.level;
+        }
+        return diference;
+    }
+    simpleHeuristic() {
         let diference = 0;
         for (let xAxis = 0; xAxis < target_1.TARGET.length; xAxis++) {
             for (let yAxis = 0; yAxis < target_1.TARGET[xAxis].length; yAxis++) {
@@ -29,7 +63,21 @@ class Node {
                 }
             }
         }
-        this.cost = diference;
+        if (this.level) {
+            diference += this.level;
+        }
+        return diference;
+    }
+    calculateCost() {
+        if (variation_1.variation === 'uniformCost') {
+            this.cost = this.uniformCost();
+        }
+        else if (variation_1.variation === 'simpleHeuristic') {
+            this.cost = this.simpleHeuristic();
+        }
+        else {
+            this.cost = this.veryComplexHeuristic();
+        }
         return this.cost;
     }
     getBoard() {
@@ -46,9 +94,15 @@ class Node {
     getChildren() {
         const children = [];
         const moviments = [this.moveUp(), this.moveRight(), this.moveDown(), this.moveLeft()];
-        const validMoviments = moviments.filter((board) => { return board.get().length > 0; });
+        const validMoviments = moviments.filter((board) => {
+            return board.get().length > 0;
+        });
         validMoviments.map((moviment) => {
-            children.push(new Node(this.father, moviment, this.level + 1));
+            let level = 1;
+            if (this.level) {
+                level = level;
+            }
+            children.push(new Node(this, moviment, level));
         });
         return children;
     }
