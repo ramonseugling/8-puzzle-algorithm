@@ -54,6 +54,7 @@ function main() {
     console.log('Nível de profundidade do nodo final: ', lastNode.getLevel());
     console.log('Quantidade de nodos visitados: ', closedList.getNodes().length);
     console.log('Quantidade de nodos expandidos/criados: ', closedList.getNodes().length + openList.getNodes().length);
+    console.log('Step: ', lastNode.step);
 }
 main();
 //# sourceMappingURL=index.js.map

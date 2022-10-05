@@ -7,8 +7,9 @@ export class Node {
     private father!: Node
     private cost!: number
     private level!: number
+    public step!: String
 
-    constructor(father?: Node, board?: Board, level?: number) {
+    constructor(father?: Node, board?: Board, level?: number, step?: String) {
         if (father) {
             this.father = father
         }
@@ -23,6 +24,10 @@ export class Node {
             this.board = board
             const cost = this.calculateCost()
             this.setCost(cost)
+        }
+
+        if (step) {
+            this.step = step
         }
     }
 
@@ -39,29 +44,16 @@ export class Node {
 
     private veryComplexHeuristic(): number {
         let diference = 0
-        let distance = 1
         for (let xAxis = 0; xAxis < TARGET.length; xAxis++) {
             for (let yAxis = 0; yAxis < TARGET[xAxis].length; yAxis++) {
                 if (this.board.get()[xAxis][yAxis] !== TARGET[xAxis][yAxis]) {
-                    const block = this.board.get()[xAxis][yAxis]
                     diference ++
-
-                    for (let targetXAxis = 0; targetXAxis < TARGET.length; targetXAxis++) {
-                        for (let targetYAxis = 0; targetYAxis < TARGET[targetXAxis].length; targetYAxis++) {
-                            if (TARGET[targetXAxis][targetYAxis] === block && block !== 0) {
-                                if (targetXAxis!==xAxis && targetYAxis!==yAxis) {
-                                    distance++
-                                }
-                            }
-                        }
-                    }
-
-                    diference *= distance
-                    distance = 1
                 }
             }
         }
-
+        if (diference > 0) {
+            diference += this.level
+        }
         return diference
     }
 
@@ -73,6 +65,9 @@ export class Node {
                     diference ++
                 }
             }
+        }
+        if (diference > 0) {
+            diference += this.level
         }
         return diference
     }
@@ -105,16 +100,16 @@ export class Node {
     public getChildren(): Node[] {
         const children: Node[] = []
         const moviments = [this.moveUp(), this.moveRight(), this.moveDown(), this.moveLeft()]
-        const validMoviments = moviments.filter((board: Board) => {
-            return board.get().length > 0
+        const validMoviments = moviments.filter((board: any) => {
+            return board[0].get().length > 0
         })
         validMoviments.map((moviment)=> {
-            children.push(new Node(this, moviment, this.level+1))
+            children.push(new Node(this, moviment[0], this.level+1, this.step+ ' ' + moviment[1]))
         })
         return children
     }
 
-    public moveUp(): Board {
+    public moveUp(): [Board, String?] {
         const board: Board = new Board(this.board.get())
         const blank = board.getBlank()
 
@@ -122,17 +117,17 @@ export class Node {
             for (let yAxis = 0; yAxis < TARGET[xAxis].length; yAxis++) {
                 if (xAxis === blank[0] && yAxis === blank[1]) {
                     if (xAxis - 1 < 0) {
-                        return new Board()
+                        return [new Board()]
                     }
                     board.set([xAxis, yAxis], this.board.get()[xAxis -1][yAxis])
                     board.set([xAxis-1, yAxis], 0)
                 }
             }
         }
-        return board
+        return [board, 'UP']
     }
 
-    public moveRight(): Board {
+    public moveRight(): [Board, String?] {
         const board: Board = new Board(this.board.get())
         const blank = board.getBlank()
 
@@ -140,17 +135,17 @@ export class Node {
             for (let yAxis = 0; yAxis < TARGET[xAxis].length; yAxis++) {
                 if (xAxis === blank[0] && yAxis === blank[1]) {
                     if (yAxis + 1 > 2) {
-                        return new Board()
+                        return [new Board()]
                     }
                     board.set([xAxis, yAxis], this.board.get()[xAxis][yAxis+1])
                     board.set([xAxis, yAxis+1], 0)
                 }
             }
         }
-        return board
+        return [board, 'RIGHT']
     }
 
-    public moveDown(): Board {
+    public moveDown(): [Board, String?] {
         const board: Board = new Board(this.board.get())
         const blank = board.getBlank()
 
@@ -158,17 +153,17 @@ export class Node {
             for (let yAxis = 0; yAxis < TARGET[xAxis].length; yAxis++) {
                 if (xAxis === blank[0] && yAxis === blank[1]) {
                     if (xAxis+1 > 2) {
-                        return new Board()
+                        return [new Board()]
                     }
                     board.set([xAxis, yAxis], this.board.get()[xAxis+1][yAxis])
                     board.set([xAxis+1, yAxis], 0)
                 }
             }
         }
-        return board
+        return [board, 'DOWN']
     }
 
-    public moveLeft(): Board {
+    public moveLeft(): [Board, String?] {
         const board: Board = new Board(this.board.get())
         const blank = board.getBlank()
 
@@ -176,14 +171,14 @@ export class Node {
             for (let yAxis = 0; yAxis < TARGET[xAxis].length; yAxis++) {
                 if (xAxis === blank[0] && yAxis === blank[1]) {
                     if (yAxis - 1 < 0) {
-                        return new Board()
+                        return [new Board()]
                     }
                     board.set([xAxis, yAxis], this.board.get()[xAxis][yAxis-1])
                     board.set([xAxis, yAxis-1], 0)
                 }
             }
         }
-        return board
+        return [board, 'LEFT']
     }
 
     public equal(param: Node): boolean {
