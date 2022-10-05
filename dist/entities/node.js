@@ -9,48 +9,48 @@ class Node {
         if (father) {
             this.father = father;
         }
+        if (!level) {
+            this.level = 0;
+        }
+        else {
+            this.level = level;
+        }
         if (board) {
             this.board = board;
             const cost = this.calculateCost();
             this.setCost(cost);
         }
-        if (!level) {
-            this.level = -1;
-        }
-        else {
-            this.level = level;
-        }
     }
     uniformCost() {
-        let diference = 0;
-        if (this.level > -1) {
+        if (!this.level) {
             return 1;
         }
-        diference += this.level;
-        return diference;
+        if (this.equal(new Node(this, new board_1.Board(target_1.TARGET)))) {
+            return 0;
+        }
+        return this.level;
     }
     veryComplexHeuristic() {
         let diference = 0;
-        let diference1 = 1;
+        let distance = 1;
         for (let xAxis = 0; xAxis < target_1.TARGET.length; xAxis++) {
             for (let yAxis = 0; yAxis < target_1.TARGET[xAxis].length; yAxis++) {
                 if (this.board.get()[xAxis][yAxis] !== target_1.TARGET[xAxis][yAxis]) {
                     const block = this.board.get()[xAxis][yAxis];
+                    diference++;
                     for (let targetXAxis = 0; targetXAxis < target_1.TARGET.length; targetXAxis++) {
                         for (let targetYAxis = 0; targetYAxis < target_1.TARGET[targetXAxis].length; targetYAxis++) {
-                            if (target_1.TARGET[targetXAxis][targetYAxis] !== block) {
-                                diference1 = Math.abs((xAxis + yAxis) - (targetXAxis + targetYAxis));
+                            if (target_1.TARGET[targetXAxis][targetYAxis] === block && block !== 0) {
+                                if (targetXAxis !== xAxis && targetYAxis !== yAxis) {
+                                    distance++;
+                                }
                             }
                         }
                     }
-                    diference *= diference1;
-                    diference1 = 1;
-                    diference++;
+                    diference *= distance;
+                    distance = 1;
                 }
             }
-        }
-        if (this.level) {
-            diference += this.level;
         }
         return diference;
     }
@@ -62,9 +62,6 @@ class Node {
                     diference++;
                 }
             }
-        }
-        if (this.level) {
-            diference += this.level;
         }
         return diference;
     }
@@ -98,11 +95,7 @@ class Node {
             return board.get().length > 0;
         });
         validMoviments.map((moviment) => {
-            let level = 1;
-            if (this.level) {
-                level = level;
-            }
-            children.push(new Node(this, moviment, level));
+            children.push(new Node(this, moviment, this.level + 1));
         });
         return children;
     }

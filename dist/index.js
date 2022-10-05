@@ -28,9 +28,7 @@ function play(root) {
     const openList = new open_list_1.OpenList(root);
     const closedList = new closed_list_1.ClosedList();
     let current = new node_1.Node();
-    let counter = 0;
     while (openList.getNodes().length) {
-        counter++;
         current = openList.exitFirst();
         show(current);
         if (current && !current.getCost()) {

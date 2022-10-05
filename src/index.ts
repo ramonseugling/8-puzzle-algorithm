@@ -29,9 +29,7 @@ function play(root: Node): [Node, OpenList, ClosedList] {
     const openList: OpenList = new OpenList(root)
     const closedList: ClosedList = new ClosedList()
     let current = new Node()
-    let counter = 0
     while (openList.getNodes().length) {
-        counter++
         current = openList.exitFirst() as Node
 
         show(current)
