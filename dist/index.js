@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const inicial_1 = require("./constants/inicial");
-const target_1 = require("./constants/target");
 const open_list_1 = require("./entities/open-list");
 const board_1 = require("./entities/board");
 const node_1 = require("./entities/node");
@@ -48,9 +47,7 @@ function main() {
     const lastNode = gameResult[0];
     const openList = gameResult[1];
     const closedList = gameResult[2];
-    console.log('Atingimos o objetivo');
-    console.log('Target: ', target_1.TARGET);
-    console.log('Nodo final: ', lastNode.getBoard().get());
+    console.log('Atingimos o objetivo!');
     console.log('Nível de profundidade do nodo final: ', lastNode.getLevel());
     console.log('Quantidade de nodos visitados: ', closedList.getNodes().length);
     console.log('Quantidade de nodos expandidos/criados: ', closedList.getNodes().length + openList.getNodes().length);

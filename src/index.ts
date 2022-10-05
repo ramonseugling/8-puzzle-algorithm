@@ -54,9 +54,7 @@ function main() {
     const openList = gameResult[1]
     const closedList = gameResult[2]
 
-    console.log('Atingimos o objetivo')
-    console.log('Target: ', TARGET)
-    console.log('Nodo final: ', lastNode.getBoard().get())
+    console.log('Atingimos o objetivo!')
     console.log('Nível de profundidade do nodo final: ', lastNode.getLevel())
     console.log('Quantidade de nodos visitados: ', closedList.getNodes().length)
     console.log('Quantidade de nodos expandidos/criados: ', closedList.getNodes().length + openList.getNodes().length)
